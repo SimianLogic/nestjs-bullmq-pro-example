@@ -8,8 +8,17 @@ export class AudioController {
 
   @Post('transcode')
   async transcode() {
-    await this.audioQueue.add('transcode', {
-      file: 'audio.mp3',
-    });
+    await this.audioQueue.add(
+      'transcode',
+      {
+        file: 'audio.mp3',
+      },
+      {
+        group: {
+          id: 'asdf',
+        },
+        priority: 2, //priority appears to cancel out group concurrency
+      },
+    );
   }
 }
